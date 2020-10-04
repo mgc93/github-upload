@@ -8,7 +8,11 @@
     </link>
     <link href="css/jspsych.css" rel="stylesheet" type="text/css">
     </link>
-    <link href="css/binary-choice.css" rel="stylesheet" type="text/css">
+    <link href="css/binary-choice-game.css" rel="stylesheet" type="text/css">
+    </link>
+    <link href="css/table-slider-response.css" rel="stylesheet" type="text/css">
+    </link>
+    <link href="css/instructions.css" rel="stylesheet" type="text/css">
     </link>
 </head>
 <style>
@@ -147,6 +151,7 @@
 <script src="js/lib/bowser.js"></script>
 <script src="js/lib/jspsych.js"></script>
 <script src="js/lib/js-combinatrorics-0.5.5.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/js-combinatorics/1.4.5/combinatorics.js"></script> -->
 <script src="js/lib/webgazer.js"></script>
 <script src="js/lib/jcanvas.min.js"></script>
 <script src="js/utilsHelper.js"></script>
@@ -155,14 +160,18 @@
 <script src="js/plugins/jspsych-image-slider-response.js"></script>
 <script src="js/plugins/jspsych-image-keyboard-response.js"></script>
 <script src="js/plugins/jspsych-survey-text.js"></script>
+<script src="js/plugins/jspsych-survey-multi-choice.js"></script>
 <script src="js/plugins/jspsych-call-function.js"></script>
 <script src="js/plugins/decoy-gamble.js"></script>
-<script src="js/plugins/binary-choice.js"></script>
+<!-- <script src="js/plugins/binary-choice.js"></script> -->
+<script src="js/plugins/binary-choice-game.js"></script>
 <script src="js/plugins/jspsych-fullscreen.js"></script>
 <script src="js/plugins/eye-tracking.js"></script>
+<script src="js/plugins/table-slider-response.js"></script>
+<script src="js/plugins/jspsych-instructions.js"></script>
 <!-- call your experiement script -->
-<script src="file/stimuli.js"></script>
-<script src="js/main_task.js"></script>
+<!-- <script src="js/main_task.js"></script> -->
+<script src="js/coordination_game.js"></script>
 <script>
     const goExp = document.querySelector(".goExp");
 
@@ -192,6 +201,7 @@
             location.reload();
         });
     }
+
 
 </script>
 

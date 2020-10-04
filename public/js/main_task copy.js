@@ -1,28 +1,16 @@
-// // @ts-check
 /**************/
 /** Constants */
 /**************/
 const nrating = 5;
-const nchoices = 7;
+const nchoices = 5;
 const fixation_duration = 500;
 const nprac = 3;
 const nImageInst = 2;
 const debugModeCaliDot = 1;
-const realCaliDot = 12;
+const realCaliDot = 5;
 
 
 var subject_id = jsPsych.randomization.randomID(7);
-
-/** load learning task images */
-var stimuli1_images = [];
-for (var i = 1; i < 6; i++) {
-  stimuli1_images.push('img/fractals1/blue_' + i + '.jpg');
-}
-var stimuli2_images = [];
-for (var i = 1; i < 6; i++) {
-  stimuli2_images.push('img/fractals2/pink_' + i + '.jpg');
-}
-
 
 
 /** load all the images, and remember to preload before starting the experiment */
@@ -31,6 +19,8 @@ for (var i = 0; i < nrating; i++) {
   // exp_images.push('../img/FoodImages/foodStimulus_' + i + '.jpg');
   exp_images.push('img/FoodImages/foodStimulus_' + i + '.jpg');
 }
+
+
 
 
 /** load all the images, and remember to preload before starting the egitxperiment */
@@ -729,53 +719,6 @@ var trialcounter;
 
 
 
-/** learning task */
-
-// steps
-// 1. show choice phase
-// 2. show feedback phase
-
-// // 1. choice phase
-// var learningTaskInstruction = {
-//   type: 'html-keyboard-response',
-//   stimulus: `<div><font size=120%; font color = 'green';>Food preference</font><br/>
-//                                         <br><br/>
-//        Now, we will begin with the choice task.  <br/>
-//        If you want to choose to the left image,  press  the <b><font color='green'>F</font></b> key; <br/>
-//        If you want to choose to the right image,  press the <b><font color='green'>J</font></b>  key;<br/>
-//                   <br><br/>
-//        After each choice, make sure to stare at the red circles that will appear on the screen, until they disappear.  <br/>
-//        This is part of ongoing adjustments to the eye-tracking.    <br/>
-//        <br><br/>
-//        NOTE: If the computer thinks that you are looking somewhere other than directly at the red dot,   <br/>
-//        you may need to redo the calibration and validation process, slowing down the study.   <br/>
-//                                                <br><br/>
-//       When you are ready, press the <b>SPACE BAR</b> to begin with a couple of practice rounds. </div>`,
-//   choices: ['spacebar'],
-//   post_trial_gap: 500  
-// }
-
-
-
-// var charity_prac_choice_count = 0;
-// var charity_prac_choice = {
-//   timeline: [
-//     fixation1,
-//     {
-//       type: "binary-choice",
-//       stimulus: () => charity_prac_pairs[charity_prac_choice_count],
-//       choices: ["F", "J"],
-//       doEyeTracking: false,
-//       realOrPrac: false,
-//       on_finish: () => charity_prac_choice_count++,
-//     }
-//   ],
-//   loop_function: () => charity_prac_choice_count < 3,
-// };
-
-
-
-
 
 
 
@@ -784,14 +727,13 @@ function startExperiment() {
     timeline: [
       start_exp_survey_trial,
       fullscreenEnter,
-      // eyeTrackingInstruction1 ,eyeTrackingInstruction2 , inital_eye_calibration ,
-      // experimentOverview,
-      //  ratingOverview,  ratings,
-    //   choiceOverview, recalibration,
-    // choiceInstructionReinforce,
-    //   charity_prac_choice,
-    //  EnterRealChoice, charity_choice1, breaktime, 
-    //   recalibration2, charity_choice2, 
+      eyeTrackingInstruction1 ,eyeTrackingInstruction2 , inital_eye_calibration ,
+      experimentOverview,
+       ratingOverview,  ratings,
+      choiceOverview, recalibration,choiceInstructionReinforce,
+      learning_choice,
+     EnterRealChoice, charity_choice1, breaktime, 
+      recalibration2, charity_choice2, 
    //  slideshowQuizOverview,slideshowQuiz,postQuizScreen,
     success_guard
     ],
@@ -812,7 +754,7 @@ function startExperiment() {
         jsPsych.data.reset();
       }
     },
-    preload_images: [stimuli1_images, stimuli2_images,exp_images, instruct_img,prac_img],
+    preload_images: [exp_images, instruct_img,prac_img],
     on_finish: () => on_finish_callback(),
     on_close: () => on_finish_callback()
 

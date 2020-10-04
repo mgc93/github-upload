@@ -123,11 +123,9 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       html += '<div id="jspsych-survey-multi-choice-'+question_id+'" class="'+question_classes.join(' ')+'"  data-name="'+question.name+'">';
 
       // add question text
-     // html += '<p class="jspsych-survey-multi-choice-text survey-multi-choice">' + question.prompt 
-     html += `<div id="jspsych-survey-multi-choice-image " ><img height="300px" width="500px" src="${question.prompt}"/></div>`;
-    // html += '<div id="jspsych-survey-multi-choice-text " >Please choose the mission statement that matches the charity. </div>';
+      html += '<p class="jspsych-survey-multi-choice-text survey-multi-choice">' + question.prompt 
       if(question.required){
-        html += "<span class='required'>Which of the following mission statement matches the charity best? *</span>";
+        html += "<span class='required'>*</span>";
       }
       html += '</p>';
 
@@ -142,8 +140,8 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
 
         // add radio button container
         html += '<div id="'+option_id_name+'" class="jspsych-survey-multi-choice-option">';
-        html += '<label class="jspsych-survey-multi-choice-text" for="'+input_id+'">'+question.options[j]+'</label>';
         html += '<input type="radio" name="'+input_name+'" id="'+input_id+'" value="'+question.options[j]+'" '+required_attr+'></input>';
+        html += '<label class="jspsych-survey-multi-choice-text" for="'+input_id+'">'+question.options[j]+'</label>';
         html += '</div>';
       }
 
@@ -152,6 +150,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
     
     // add submit button
     html += '<input type="submit" id="'+plugin_id_name+'-next" class="'+plugin_id_name+' jspsych-btn"' + (trial.button_label ? ' value="'+trial.button_label + '"': '') + '></input>';
+    html += '<br><br/>';
     html += '</form>';
 
     // render
@@ -184,7 +183,7 @@ jsPsych.plugins['survey-multi-choice'] = (function() {
       // save data
       var trial_data = {
         "rt": response_time,
-        "quiz_responses": JSON.stringify(question_data),
+        "responses": JSON.stringify(question_data),
         "question_order": JSON.stringify(question_order)
       };
       display_element.innerHTML = '';

@@ -12,25 +12,47 @@
 }
 
 
-#multiattribute-choices-stimulus-left {
+#multiattribute-choices-stimulus-top {
 background-size: cover;
 position: fixed;
 border: 3px solid white;
 box-sizing: border-box;
-top: 50%;
-left: 25%;
+top: 30%;
+left: 50%;
 transform: translate(-50%, -50%);
 
 }
 
-#multiattribute-choices-stimulus-right {
+#multiattribute-choices-stimulus-bottom {
 background-size: cover;
 position: fixed;
 border: 3px solid white;
 box-sizing: border-box;
-top: 50%;
-left: 75%;
+top: 70%;
+left: 50%;
 transform: translate(-50%, -50%);
+}
+
+#multiattribute-choices-stimulus-top-points {
+position: absolute;
+top: 50%;
+left: 50%;
+font-size: 80px;
+font-family: sans-serif;
+font-weight: bold;
+color: white;
+transform: translate(-50%, -50%)
+}
+
+#multiattribute-choices-stimulus-bottom-points {
+position: absolute;
+top: 50%;
+left: 50%;
+font-size: 80px;
+font-family: sans-serif;
+font-weight: bold;
+color: white;
+transform: translate(-50%, -50%)
 }
 
 
@@ -39,4 +61,3 @@ transform: translate(-50%, -50%);
   max-height: 100%;
   display: block; /* remove extra space below image */
 }
-

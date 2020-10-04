@@ -3,19 +3,25 @@
  * type for params: BOOL, STRING, INT, FLOAT, FUNCTION, KEYCODE, SELECT, HTML_STRING, IMAGE, AUDIO, VIDEO, OBJECT, COMPLEX
  */
 
-jsPsych.plugins["binary-choice"] = (function () {
+jsPsych.plugins["binary-feedback"] = (function () {
 
   var plugin = {};
 
   plugin.info = {
 
-    name: "binary-choice",
+    name: "binary-feedback",
     parameters: {
       stimulus: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
         pretty_name: 'stimulus',
         default: undefined,
         description: 'The HTML string to be displayed'
+      },
+      points: {
+        type: jsPsych.plugins.parameterType.HTML_STRING,
+        pretty_name: 'stimulus',
+        default: [0, 0],
+        description: 'The HTML string of points to be displayed'
       },
       choices: {
         type: jsPsych.plugins.parameterType.KEYCODE,
@@ -29,12 +35,6 @@ jsPsych.plugins["binary-choice"] = (function () {
         pretty_name: 'timing_response',
         default: 0,
         description: 'timing_response.'
-      },
-      stimulus_duration: {
-        type: jsPsych.plugins.parameterType.INT,
-        pretty_name: 'stimulus_duration',
-        default: null,
-        description: 'Display time of stimulus, regardless of when choice is made'
       },
       doEyeTracking: {
         type: jsPsych.plugins.parameterType.BOOL,
@@ -64,9 +64,7 @@ jsPsych.plugins["binary-choice"] = (function () {
     trial.choices = trial.choices || [];
     //trial.timing_stim = trial.timing_stim || -1;
     trial.timing_response = trial.timing_response || -1;
-    // trial.display_time = trial.display_time || -1;
-    // var selected_color = 'rgb(5, 157, 190)';
-    var selected_color = 'rgb(255, 255, 255)';
+    var selected_color = 'rgb(5, 157, 190)';
     var setTimeoutHandlers = [];
     var keyboardListener;
    
@@ -88,26 +86,29 @@ jsPsych.plugins["binary-choice"] = (function () {
 
 
       new_html += '<div class="container-multi-choice">';
-      new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-left">';
-      new_html += `<div id="multiattribute-choices-stimulus-left " ><img class = "img_stimuli" height="230px" width="400px" src="${trial.stimulus[0]}"/></div>`;
+      new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-top">';
+      new_html += `<div id="multiattribute-choices-stimulus-top " ><img class = "img_stimuli" height="230px" width="400px" src="${trial.stimulus[0]}"/>`;
+      new_html += `<div id="multiattribute-choices-stimulus-top-points">${trial.points[0]}</div>`;
       new_html += '</div>';
-      new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-right">';
-      new_html += `<div id="multiattribute-choices-stimulus-right " ><img class = "img_stimuli" height="230px" width="400px" src="${trial.stimulus[1]}"/></div>`;
+      new_html += '</div>';
+      new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-bottom">';
+      new_html += `<div id="multiattribute-choices-stimulus-bottom " ><img class = "img_stimuli" height="230px" width="400px" src="${trial.stimulus[1]}"/>`;
+      new_html += `<div id="multiattribute-choices-stimulus-bottom-points">${trial.points[1]}</div>`;
+      new_html += '</div>';
       new_html += '</div>';
       new_html += '<div id="binary-timeoutinfo"></div>';
       new_html += '</div>';
       display_element.innerHTML = new_html;
     };
 
-    // to display a border around the chosen option
     var display_selection = function () {
       var selected;
-      // if (String.fromCharCode(response.key) == trial.choices[0]) {
-      //   selected = '#multiattribute-choices-stimulus-left';
-      // } else {
-      //   selected = '#multiattribute-choices-stimulus-right';
-      // }
-      // $(selected).css('border', `6px solid ${selected_color}`);
+      if (String.fromCharCode(response.key) == trial.choices[0]) {
+        selected = '#multiattribute-choices-stimulus-top';
+      } else {
+        selected = '#multiattribute-choices-stimulus-bottom';
+      }
+      $(selected).css('border', `6px solid ${selected_color}`);
     };
 
     var display_timeout = function () {
@@ -139,11 +140,7 @@ jsPsych.plugins["binary-choice"] = (function () {
             kill_timers();
             response = info;
             display_selection();
-            if (trial.stimulus_duration === null) {
-              setTimeout(() => end_trial(false), 500);
-            } else { 
-              setTimeout(() => end_trial(false), trial.stimulus_duration - response.rt);
-            }
+            setTimeout(() => end_trial(false), 500);
           },
         });
       }
@@ -161,7 +158,7 @@ jsPsych.plugins["binary-choice"] = (function () {
         var response_timer = setTimeout(function () {
           kill_listeners();
           display_timeout();
-          setTimeout(() => end_trial(true), 500); 
+          setTimeout(() => end_trial(true), 500);
         }, trial.timing_response);
          setTimeoutHandlers.push(response_timer);
       }
@@ -181,8 +178,11 @@ jsPsych.plugins["binary-choice"] = (function () {
       // data saving
       var trial_data = {
         "stimulus": trial.stimulus,
-        "left_stimulus":trial.stimulus[0],
-        "right_stimulus": trial.stimulus[1],
+        "top_stimulus":trial.stimulus[0],
+        "bottom_stimulus": trial.stimulus[1],
+        "points": trial.points,
+        "top_points": trial.points[0],
+        "bottom_points": trial.points[1],
         "probability":trial.Probabilty,
         "rt": response.rt,
         "key_press": response.key,

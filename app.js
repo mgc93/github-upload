@@ -39,7 +39,7 @@ const body_parser = require("body-parser");
 // };
 
 const dbx = new Dropbox({
-    accessToken: 'DNbcoilgmnsAAAAAAAAAAZuml-fTGBSNODuaPd-Dv7-27J5_AZsbXjTsA7d6l3kq',
+    accessToken: 'ZRij1iMYIgEAAAAAAAAAAVWryUDoyOHdaq1X5mMnsu5nYkaCcrxTOsxnr4jLr2En',
     fetch
 });
 

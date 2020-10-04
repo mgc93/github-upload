@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "server": "http-server",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +15,7 @@
     "dotenv": "^8.2.0",
     "dropbox": "^4.0.30",
     "express": "^4.17.1",
+    "http-server": "^0.12.3",
     "node-fetch": "^2.6.0",
     "nodemon": "^2.0.4",
     "stable": "^0.1.8",

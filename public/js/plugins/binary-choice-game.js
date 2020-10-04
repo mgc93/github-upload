@@ -3,13 +3,13 @@
  * type for params: BOOL, STRING, INT, FLOAT, FUNCTION, KEYCODE, SELECT, HTML_STRING, IMAGE, AUDIO, VIDEO, OBJECT, COMPLEX
  */
 
-jsPsych.plugins["binary-choice"] = (function () {
+jsPsych.plugins["binary-choice-game"] = (function () {
 
   var plugin = {};
 
   plugin.info = {
 
-    name: "binary-choice",
+    name: "binary-choice-game",
     parameters: {
       stimulus: {
         type: jsPsych.plugins.parameterType.HTML_STRING,
@@ -35,6 +35,18 @@ jsPsych.plugins["binary-choice"] = (function () {
         pretty_name: 'stimulus_duration',
         default: null,
         description: 'Display time of stimulus, regardless of when choice is made'
+      },
+      stimulus_order: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'stimulus_order',
+        default: null,
+        description: 'Game matrix number'
+      },
+      stimulus_display: {
+        type: jsPsych.plugins.parameterType.INT,
+        pretty_name: 'stimulus_display',
+        default: null,
+        description: 'Display type of the game matrix'
       },
       doEyeTracking: {
         type: jsPsych.plugins.parameterType.BOOL,
@@ -86,26 +98,61 @@ jsPsych.plugins["binary-choice"] = (function () {
       display_element.innerHTML = '';
       var new_html = '';
 
-
       new_html += '<div class="container-multi-choice">';
-      new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-left">';
-      new_html += `<div id="multiattribute-choices-stimulus-left " ><img class = "img_stimuli" height="230px" width="400px" src="${trial.stimulus[0]}"/></div>`;
-      new_html += '</div>';
-      new_html += '<div class="container-multi-choice-column" id= "multiattribute-choices-stimulus-right">';
-      new_html += `<div id="multiattribute-choices-stimulus-right " ><img class = "img_stimuli" height="230px" width="400px" src="${trial.stimulus[1]}"/></div>`;
-      new_html += '</div>';
+      new_html += `<table class="tg">`;
+      new_html += `<thead>`;
+      new_html += `</thead>`;
+      new_html += `<tbody>`;
+      new_html += `  <tr>`;
+      new_html += `    <td class="tg-0lax-other"></td>`;
+      new_html += `    <td class="tg-baqh-other" colspan="2"><div class = "action-other" id = "action-other-left">i</div></td>`;
+      new_html += `    <td class="tg-baqh-other" colspan="2"><div class = "action-other" id = "action-other-right">ii</div></td>`;
+      new_html += `  </tr>`;
+      new_html += `  <tr class="row-1">`;
+      new_html += `    <td class="container-multi-choice-column" id= "multiattribute-choices-stimulus-top" rowspan="2"><div class = "action-self" id = "action-self-top">I</div></td>`;
+      new_html += `    <td class="tg-0lax-top"></td>`;
+      new_html += `    <td class="tg-viqs"><div class = "points-other" id="points-top-other-left">${trial.stimulus[1]}</div></td>`;
+      new_html += `    <td class="tg-0lax-top"></td>`;
+      new_html += `    <td class="tg-viqs"><div class = "points-other" id="points-top-other-right">${trial.stimulus[3]}</div></td>`;
+      new_html += `  </tr>`;
+      new_html += `  <tr class="row-2">`;
+      new_html += `    <td class="tg-ti2t"><div class = "points-self" id="points-top-self-left">${trial.stimulus[0]}</div></td>`;
+      new_html += `    <td class="tg-0lax"></td>`;
+      new_html += `    <td class="tg-ti2t"><div class = "points-self" id="points-top-self-right">${trial.stimulus[2]}</div></td>`;
+      new_html += `    <td class="tg-0lax"></td>`;
+      new_html += `  </tr>`;
+      new_html += `  <tr class="row-3">`;
+      new_html += `    <td class="container-multi-choice-column" id= "multiattribute-choices-stimulus-bottom" rowspan="2"><div class = "action-self" id = "action-self-bottom">II</div></td>`;
+      new_html += `    <td class="tg-0lax-top"></td>`;
+      new_html += `    <td class="tg-viqs"><div class = "points-other" id="points-bottom-other-left">${trial.stimulus[5]}</div></td>`;
+      new_html += `    <td class="tg-0lax-top"></td>`;
+      new_html += `    <td class="tg-viqs"><div class = "points-other" id="points-bottom-other-right">${trial.stimulus[7]}</div></td>`;
+      new_html += `  </tr>`;
+      new_html += `  <tr class="row-4">`;
+      new_html += `    <td class="tg-ti2t"><div class = "points-self" id="points-bottom-self-left">${trial.stimulus[4]}</div></td>`;
+      new_html += `    <td class="tg-0lax"></td>`;
+      new_html += `    <td class="tg-ti2t"><div class = "points-self" id="points-bottom-self-right">${trial.stimulus[6]}</div></td>`;
+      new_html += `    <td class="tg-0lax"></td>`;
+      new_html += `  </tr>`;
+      new_html += `</tbody>`;
+      new_html += `</table>`;
       new_html += '<div id="binary-timeoutinfo"></div>';
       new_html += '</div>';
+
       display_element.innerHTML = new_html;
     };
 
     // to display a border around the chosen option
     var display_selection = function () {
-      var selected;
-      // if (String.fromCharCode(response.key) == trial.choices[0]) {
-      //   selected = '#multiattribute-choices-stimulus-left';
-      // } else {
-      //   selected = '#multiattribute-choices-stimulus-right';
+      // // var selected;
+      // if (jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(response.key) == trial.choices[0]) {
+      //   display_element.querySelector('.row-1').className += '-responded';
+      //   display_element.querySelector('.row-2').className += '-responded';
+      //   // selected = '#multiattribute-choices-stimulus-left';
+      // } else if(jsPsych.pluginAPI.convertKeyCodeToKeyCharacter(response.key) == trial.choices[1]) {
+      //   display_element.querySelector('.row-3').className += '-responded';
+      //   display_element.querySelector('.row-4').className += '-responded';
+      //   // selected = '#multiattribute-choices-stimulus-right';
       // }
       // $(selected).css('border', `6px solid ${selected_color}`);
     };
@@ -181,8 +228,10 @@ jsPsych.plugins["binary-choice"] = (function () {
       // data saving
       var trial_data = {
         "stimulus": trial.stimulus,
-        "left_stimulus":trial.stimulus[0],
-        "right_stimulus": trial.stimulus[1],
+        "top_stimulus":trial.stimulus.slice(0,4),
+        "bottom_stimulus": trial.stimulus.slice(4),
+        "game_number": trial.stimulus_order,
+        "display_order": trial.stimulus_display,
         "probability":trial.Probabilty,
         "rt": response.rt,
         "key_press": response.key,
