@@ -942,7 +942,18 @@ var riskSurvey = {
     }
 };
 
-
+downloadCSV = function(csv,filename) {
+    var csvFile;
+    var downloadLink;
+    
+    csvFile = new Blob( [csv], {type: "text/csv"});
+    downloadLink = document.createElement("a");
+    downloadLink.download = filename;
+    downloadLink.href = window.URL.createObjectURL(csvFile);
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    };
 
 
 
@@ -1088,7 +1099,7 @@ var on_finish_callback = function () {
             alert("problem occured while writing data to box.");
             var csv = jsPsych.data.get().csv();
             var filename = "coordination-game-test.csv";
-            // downloadCSV(csv, filename);
+            downloadCSV(csv, filename);
         })
 }
 
