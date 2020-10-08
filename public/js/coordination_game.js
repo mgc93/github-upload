@@ -1135,7 +1135,7 @@ function startExperiment() {
                 We will send you the bonus payments for Part 1 and Part 2 in approximately 2 weeks. </br>
                 </div>`);
             }
-            if (trialcounter == 40) { 
+            if (trialcounter == 10) { 
                 on_finish_callback();
                 jsPsych.data.reset();
             }
