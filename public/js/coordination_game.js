@@ -1082,10 +1082,10 @@ var on_finish_callback = function () {
         contentType: "application/json"
     })
         .done(function () {
-            // alert("your data has been saved!")
+            alert("your data has been saved!")
         })
         .fail(function () {
-            //alert("problem occured while writing data to box.");
+            alert("problem occured while writing data to box.");
         })
 }
 
