@@ -114,7 +114,11 @@ app.post("/subject-status", function (request, response) {
 });
 
 
-//start the server
-app.listen(app.get('port'), function () {
-    console.log("listening to port");
+// //start the server
+// app.listen(app.get('port'), function () {
+//     console.log("listening to port");
+// });
+
+app.listen(process.env.PORT, function() {
+    console.log("listening to port")
 });
