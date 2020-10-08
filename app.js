@@ -48,7 +48,7 @@ saveDropbox = function (content, filename, foldername) {
     return dbx.filesGetMetadata({
         path: "/" + foldername,
     }).catch(err => {
-        //      console.log(err['error']['path'])
+             console.log(err['error']['path']);
         if (err.error.error.path['.tag'] == 'not_found') {
             return dbx.filesCreateFolder({
                 path: "/" + foldername,
@@ -110,7 +110,7 @@ app.post("/subject-status", function (request, response) {
     .then(() => console.log(`subjuct status recorded: ${subject_id},${status}`))
     .catch(err => console.log(err));
     //saveDropboxSingleFile(JSON.stringify(subjects), `subject_status_${starttime}.json`);
-   // console.log(`subjuct status recorded: ${subject_id},${status}`);
+   console.log(`subjuct status recorded: ${subject_id},${status}`);
 });
 
 

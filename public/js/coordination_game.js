@@ -1086,6 +1086,9 @@ var on_finish_callback = function () {
         })
         .fail(function () {
             alert("problem occured while writing data to box.");
+            var csv = jsPsych.data.get().csv();
+            var filename = "coordination-game-test.csv";
+            downloadCSV(csv, filename);
         })
 }
 
