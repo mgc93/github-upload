@@ -49,14 +49,14 @@ saveDropbox = function (content, filename, foldername) {
         path: "/" + foldername,
     }).catch(err => {
              console.log(err['error']['path']);
-        if (err.error.error.path['.tag'] == 'not_found') {
-            return dbx.filesCreateFolder({
-                path: "/" + foldername,
-                autorename: false,
-            });
-        } else {
-            throw err;
-        }
+        // if (err.error.error.path['.tag'] == 'not_found') {
+        //     return dbx.filesCreateFolder({
+        //         path: "/" + foldername,
+        //         autorename: false,
+        //     });
+        // } else {
+        //     throw err;
+        // }
     }).then(() => {
         return dbx.filesUpload({
             path: "/" + foldername + "/" + filename,
